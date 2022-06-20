@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "langqc_state"
+version = "0.1.0"
+description = "QC State API for LangQC."
+authors = ["Adam Blanchet <ab59@sanger.ac.uk>"]
+license = "GPL-3.0-or-later"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = {version = "^0.78", extras = ["standard"]}
+uvicorn = { version = "^0.17", extras = ["standard"]}
+pydantic = "^1.9.0"
+
+[tool.poetry.dev-dependencies]
+black = "^22.3.0"
+flake8 = "^4.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
