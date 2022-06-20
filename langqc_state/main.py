@@ -26,6 +26,16 @@ app = FastAPI(title="LangQC State API", openapi_tags=tags_metadata)
 # Get wells in different statuses
 
 
+@app.get("/wells/qc_status/inbox", response_model=List, tags=["Well inbox"])
+def get_inbox_wells():
+    """Get inbox wells.
+
+    Makes a call to the langqc data API, and returns a filtered list. Returns wells
+    that are not yet assigned any QC status.
+    """
+    pass
+
+
 @app.get("/wells/qc_status/in_progress", response_model=List, tags=["Well inbox"])
 def get_in_progress_wells():
     """Get in progress wells.
