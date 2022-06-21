@@ -88,7 +88,10 @@ def steal_well(user_claim: Dict, run_name: str, well_label: str):
 def qc_assign_well(qc_state: Dict, run_name: str, well_label: str):
     pass
 
-@app.get("/run/{run_name}/well/{well_label}/qc_outcome", tags=["Well level QC operations"])
+
+@app.get(
+    "/run/{run_name}/well/{well_label}/qc_outcome", tags=["Well level QC operations"]
+)
 def get_well_qc_outcome(run_name: str, well_label: str):
     pass
 
@@ -96,25 +99,28 @@ def get_well_qc_outcome(run_name: str, well_label: str):
 # ID-level QC operations
 
 
-@app.post("/id_product", response_model=str, tags=["ID-based QC operations"])
-def get_product_id(product: Dict):
+@app.post(
+    "/product/find_id_product", response_model=str, tags=["ID-based QC operations"]
+)
+def find_product_id(product: Dict):
     pass
 
 
-@app.post("/qc_claim/{id_product}", tags=["ID-based QC operations"])
+@app.post("/product/{id_product}/qc_claim", tags=["ID-based QC operations"])
 def claim_product(user_claim: Dict, id_product: str):
     pass
 
 
-@app.post("/qc_steal/{id_product}", tags=["ID-based QC operations"])
+@app.post("/product/{id_product}/qc_steal", tags=["ID-based QC operations"])
 def steal_product(user_claim: Dict, id_product: str):
     pass
 
 
-@app.post("/qc_assign/{id_product}", tags=["ID-based QC operations"])
+@app.post("/product/{id_product}/qc_assign", tags=["ID-based QC operations"])
 def qc_assign_product(qc_state: Dict, id_product: str):
     pass
 
-@app.get("/qc_outcome/{id_product}", tags=["ID-based QC operations"])
+
+@app.get("/product/{id_product}/qc_outcome", tags=["ID-based QC operations"])
 def get_product_qc_outcome(id_product: str):
     pass
