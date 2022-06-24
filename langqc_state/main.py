@@ -1,6 +1,13 @@
-from typing import Dict, List
+from typing import Dict
 
 from fastapi import FastAPI
+
+from langqc_state.models import (
+    InboxResults,
+    GetWellQcOutcomeResult,
+    QcStatus,
+    QcStatusEnum,
+)
 
 tags_metadata = [
     {
@@ -26,7 +33,12 @@ app = FastAPI(title="LangQC State API", openapi_tags=tags_metadata)
 # Get wells in different statuses
 
 
-@app.get("/wells/qc_status/inbox", response_model=List, tags=["Well inbox"])
+@app.get("/wells", response_model=InboxResults, tags=["Well inbox"])
+def get_wells_filtered_by_status(qc_status: QcStatusEnum = None):
+    pass
+
+
+@app.get("/wells/qc_status/inbox", response_model=InboxResults, tags=["Well inbox"])
 def get_inbox_wells():
     """Get inbox wells.
 
@@ -36,7 +48,9 @@ def get_inbox_wells():
     pass
 
 
-@app.get("/wells/qc_status/in_progress", response_model=List, tags=["Well inbox"])
+@app.get(
+    "/wells/qc_status/in_progress", response_model=InboxResults, tags=["Well inbox"]
+)
 def get_in_progress_wells():
     """Get in progress wells.
 
@@ -46,7 +60,7 @@ def get_in_progress_wells():
     pass
 
 
-@app.get("/wells/qc_status/on_hold", response_model=List, tags=["Well inbox"])
+@app.get("/wells/qc_status/on_hold", response_model=InboxResults, tags=["Well inbox"])
 def get_on_hold_wells():
     """Get on hold wells.
 
@@ -55,7 +69,9 @@ def get_on_hold_wells():
     pass
 
 
-@app.get("/wells/qc_status/qc_complete", response_model=List, tags=["Well inbox"])
+@app.get(
+    "/wells/qc_status/qc_complete", response_model=InboxResults, tags=["Well inbox"]
+)
 def get_qc_complete_wells():
     """Get qc_complete wells.
 
@@ -71,26 +87,28 @@ def get_qc_complete_wells():
 @app.post(
     "/run/{run_name}/well/{well_label}/qc_claim", tags=["Well level QC operations"]
 )
-def claim_well(user_claim: Dict, run_name: str, well_label: str):
+def claim_well(user_claim: QcStatus, run_name: str, well_label: str):
     pass
 
 
 @app.post(
     "/run/{run_name}/well/{well_label}/qc_steal", tags=["Well level QC operations"]
 )
-def steal_well(user_claim: Dict, run_name: str, well_label: str):
+def steal_well(user_claim: QcStatus, run_name: str, well_label: str):
     pass
 
 
 @app.post(
     "/run/{run_name}/well/{well_label}/qc_assign", tags=["Well level QC operations"]
 )
-def qc_assign_well(qc_state: Dict, run_name: str, well_label: str):
+def qc_assign_well(qc_state: QcStatus, run_name: str, well_label: str):
     pass
 
 
 @app.get(
-    "/run/{run_name}/well/{well_label}/qc_outcome", tags=["Well level QC operations"]
+    "/run/{run_name}/well/{well_label}/qc_outcome",
+    tags=["Well level QC operations"],
+    response_model=GetWellQcOutcomeResult,
 )
 def get_well_qc_outcome(run_name: str, well_label: str):
     pass
